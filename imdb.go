@@ -112,8 +112,8 @@ type EpisodeResult struct {
 }
 
 // String satisifies the Stringer interface for MovieResult.
-func (tv TVResult) String() string {
-	return fmt.Sprintf("#%s: %s [S%s E%s] (%s)", tv.ImdbID, tv.Title, tv.Season, tv.Episode, tv.Year)
+func (e EpisodeResult) String() string {
+	return fmt.Sprintf("#%s: %s [S%s E%s] (%s)", e.ImdbID, e.Title, e.Season, e.Episode, e.Year)
 }
 
 // Search searches for movies given the title and optional year using DefaultClient.
@@ -132,8 +132,8 @@ func MovieByImdbID(id string) (*MovieResult, error) {
 	return DefaultClient.MovieByImdbID(id)
 }
 
-// TVByImdbID performs an API search for a specified movie by the specific
+// EpisodeByImdbID performs an API search for a specified movie by the specific
 // id (ie, "tt2015381") using DefaultClient.
-func TVByImdbID(id, season, episode string) (*TVResult, error) {
-	return DefaultClient.TVByImdbID(id, season, episode)
+func EpisodeByImdbID(id, season, episode string) (*EpisodeResult, error) {
+	return DefaultClient.EpisodeByImdbID(id, season, episode)
 }

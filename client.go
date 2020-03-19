@@ -146,9 +146,9 @@ func (c *Client) MovieByImdbID(id string) (*MovieResult, error) {
 	return r, nil
 }
 
-// MovieByImdbID performs an API search for a specified movie by the specific
-// id (ie, "tt2015381").
-func (c *Client) MovieByImdbID(id, season, episode string) (*MovieResult, error) {
+// EpisodeByImdbID performs an API search for a specified movie by the specific
+// id (ie, "tt2015381", "1", "2").
+func (c *Client) EpisodeByImdbID(id, season, episode string) (*EpisodeResult, error) {
 	res, err := c.Do(url.Values{
 		"i":        []string{id},
 		"plot":     []string{"full"},
@@ -162,7 +162,7 @@ func (c *Client) MovieByImdbID(id, season, episode string) (*MovieResult, error)
 	}
 	defer res.Body.Close()
 
-	r := &MovieResult{}
+	r := &EpisodeResult{}
 	err = json.NewDecoder(res.Body).Decode(r)
 	if err != nil {
 		return nil, err
