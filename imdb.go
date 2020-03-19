@@ -46,37 +46,74 @@ type Rating struct {
 
 // A MovieResult will hold the related information of a single movie.
 type MovieResult struct {
-	Title             string
-	Year              string
-	Rated             string
-	Released          string
-	Runtime           string
-	Genre             string
-	Director          string
-	Writer            string
-	Actors            string
-	Plot              string
-	Language          string
-	Country           string
-	Awards            string
-	Poster            string
-	Metascore         string
-	ImdbRating        string
-	ImdbVotes         string
-	ImdbID            string
-	Type              string
-	Ratings           []Rating
-	DVD               string
-	BoxOffice         string
-	Production        string
-	Website           string
-	Response          string
-	Error             string
+	Title      string
+	Year       string
+	Rated      string
+	Released   string
+	Runtime    string
+	Genre      string
+	Director   string
+	Writer     string
+	Actors     string
+	Plot       string
+	Language   string
+	Country    string
+	Awards     string
+	Poster     string
+	Metascore  string
+	ImdbRating string
+	ImdbVotes  string
+	ImdbID     string
+	Type       string
+	Ratings    []Rating
+	DVD        string
+	BoxOffice  string
+	Production string
+	Website    string
+	Response   string
+	Error      string
 }
 
 // String satisifies the Stringer interface for MovieResult.
 func (mr MovieResult) String() string {
 	return fmt.Sprintf("#%s: %s (%s)", mr.ImdbID, mr.Title, mr.Year)
+}
+
+// A MovieResult will hold the related information of a single movie.
+type EpisodeResult struct {
+	Title      string
+	Year       string
+	Rated      string
+	Released   string
+	Season     string
+	Episode    string
+	Runtime    string
+	Genre      string
+	Director   string
+	Writer     string
+	Actors     string
+	Plot       string
+	Language   string
+	Country    string
+	Awards     string
+	Poster     string
+	Metascore  string
+	ImdbRating string
+	ImdbVotes  string
+	ImdbID     string
+	Type       string
+	Ratings    []Rating
+	DVD        string
+	BoxOffice  string
+	Production string
+	Website    string
+	Response   string
+	Error      string
+}
+
+// String satisifies the Stringer interface for MovieResult.
+func (tv TVResult) String() string {
+	return fmt.Sprintf("#%s: %s [S%s E%s] (%s)", tv.ImdbID, tv.Title, tv.Season, tv.Episode, tv.Year)
 }
 
 // Search searches for movies given the title and optional year using DefaultClient.
@@ -93,4 +130,10 @@ func MovieByTitle(title, year string) (*MovieResult, error) {
 // id (ie, "tt2015381") using DefaultClient.
 func MovieByImdbID(id string) (*MovieResult, error) {
 	return DefaultClient.MovieByImdbID(id)
+}
+
+// TVByImdbID performs an API search for a specified movie by the specific
+// id (ie, "tt2015381") using DefaultClient.
+func TVByImdbID(id, season, episode string) (*TVResult, error) {
+	return DefaultClient.TVByImdbID(id, season, episode)
 }

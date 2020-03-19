@@ -125,8 +125,37 @@ func (c *Client) MovieByTitle(title, year string) (*MovieResult, error) {
 func (c *Client) MovieByImdbID(id string) (*MovieResult, error) {
 	res, err := c.Do(url.Values{
 		"i":        []string{id},
-		"plot":     []string{"plot"},
+		"plot":     []string{"full"},
 		"tomatoes": []string{"true"},
+	})
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+
+	r := &MovieResult{}
+	err = json.NewDecoder(res.Body).Decode(r)
+	if err != nil {
+		return nil, err
+	}
+
+	if r.Response == "False" {
+		return r, errors.New(r.Error)
+	}
+
+	return r, nil
+}
+
+// MovieByImdbID performs an API search for a specified movie by the specific
+// id (ie, "tt2015381").
+func (c *Client) MovieByImdbID(id, season, episode string) (*MovieResult, error) {
+	res, err := c.Do(url.Values{
+		"i":        []string{id},
+		"plot":     []string{"full"},
+		"tomatoes": []string{"true"},
+		"type":     []string{"episode"},
+		"season":   []string{season},
+		"episode":  []string{episode},
 	})
 	if err != nil {
 		return nil, err
